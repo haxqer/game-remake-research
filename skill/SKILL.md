@@ -1,6 +1,6 @@
 ---
 name: "game-remake-research"
-description: "Use when Codex must turn an existing game into a source-backed remake / 复刻 / 对标 / vertical-slice research pack."
+description: "Use when Codex must analyze or 拆解 an existing game into a source-backed remake / 复刻, 对标 / benchmark, competitor study, or vertical-slice research pack."
 ---
 
 # Game Remake Research

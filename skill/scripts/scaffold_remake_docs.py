@@ -1681,7 +1681,7 @@ def build_experiment_summary_placeholder(
 ## 生成命令
 
 ```bash
-python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \\
+python3 "${{GAME_REMAKE_RESEARCH:?set GAME_REMAKE_RESEARCH to the installed skill root}}/scripts/summarize_experiments.py" \\
   --docs-dir ./docs/remake-{slugify(game)} \\
   --mode full
 ```
@@ -1689,6 +1689,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \\
 ## 备注
 
 - 先更新 `data/experiment-plan.csv`、`data/experiment-observations.csv` 和 `data/experiments/*.csv`。
+- 运行前先将 `GAME_REMAKE_RESEARCH` 指向已安装的 skill 根目录。
 - 如已执行指标回填，再运行摘要脚本可同时带出 `data/archetype-metrics.csv` 快照。
 - 若要用于最终 dossier，建议额外生成 `10-experiment-summary-compact.md`：
   `summarize_experiments.py --mode compact --output 10-experiment-summary-compact.md`
@@ -1705,7 +1706,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \\
 ## Command
 
 ```bash
-python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \\
+python3 "${{GAME_REMAKE_RESEARCH:?set GAME_REMAKE_RESEARCH to the installed skill root}}/scripts/summarize_experiments.py" \\
   --docs-dir ./docs/remake-{slugify(game)} \\
   --mode full
 ```
@@ -1713,6 +1714,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \\
 ## Notes
 
 - Update `data/experiment-plan.csv`, `data/experiment-observations.csv`, and `data/experiments/*.csv` first.
+- Set `GAME_REMAKE_RESEARCH` to the installed skill root before running the command.
 - If metric rollup has already been run, the summary script will also surface the current `data/archetype-metrics.csv` snapshot.
 - For final dossier merges, also generate `10-experiment-summary-compact.md` with
   `summarize_experiments.py --mode compact --output 10-experiment-summary-compact.md`.

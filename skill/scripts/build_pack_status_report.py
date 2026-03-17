@@ -697,7 +697,11 @@ def summarize_display_values(
 
 
 def shell_command(script_name: str, arguments: list[str]) -> str:
-    return "`python3 \"$GAME_REMAKE_RESEARCH/scripts/{script}\" {args}`".format(
+    return (
+        "`python3 "
+        "\"${{GAME_REMAKE_RESEARCH:?set GAME_REMAKE_RESEARCH to the installed skill root}}/scripts/{script}\" "
+        "{args}`"
+    ).format(
         script=script_name,
         args=" ".join(arguments),
     )
