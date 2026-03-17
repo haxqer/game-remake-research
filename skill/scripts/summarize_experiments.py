@@ -39,32 +39,6 @@ LABELS = {
         "mode_note": "Summary mode",
         "experiment_summary": "Experiment Summary",
     },
-    "zh-CN": {
-        "snapshot": "总览",
-        "total_experiments": "实验总数",
-        "status_counts": "状态分布",
-        "priority_counts": "优先级分布",
-        "raw_samples": "原始样本数",
-        "sampled_experiments": "已有原始样本的实验数",
-        "high_priority_open": "未完成的高优先级实验",
-        "recommended": "建议下一轮实验",
-        "no_unfinished": "没有未完成实验了。",
-        "sample_count_short": "样本={count}",
-        "sample_coverage": "原始样本覆盖",
-        "no_sample_coverage": "还没有录入任何 typed 原始样本。",
-        "missing_sample_coverage": "仍缺原始样本",
-        "registry": "实验登记",
-        "registry_headers": ("实验", "明细文件", "状态", "样本数", "负责人", "备注"),
-        "metrics": "指标回填快照",
-        "pending_metrics": "待补指标",
-        "no_metrics": "未找到 archetype metrics 文件。",
-        "populated_metrics": "已补指标",
-        "notes": "备注",
-        "regenerate_note": "更新实验明细或执行 metric rollup 后，请重新生成本文件。",
-        "truth_note": "已填充的 metric band 只是当前样本证据摘要，不应直接当作最终设计真值。",
-        "mode_note": "摘要模式",
-        "experiment_summary": "实验结果摘要",
-    },
 }
 DEFAULT_OUTPUTS = {
     "full": OUTPUT_FILE,
@@ -93,7 +67,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--language",
-        choices=("auto", "en", "zh-CN"),
+        choices=("auto", "en"),
         default="auto",
         help="Output language for generated summaries. Defaults to auto-detection from the pack.",
     )
@@ -117,11 +91,6 @@ def read_csv_rows(path: Path) -> list[dict[str, str]]:
 
 
 def detect_language(docs_dir: Path) -> str:
-    overview_path = docs_dir / "00-overview-and-source-ledger.md"
-    if overview_path.exists():
-        overview = overview_path.read_text(encoding="utf-8")
-        if "范围锁定" in overview or "复刻调研总览" in overview:
-            return "zh-CN"
     return "en"
 
 
@@ -350,10 +319,8 @@ def summarize_sample_coverage(
         lines.append(
             f"- {label['missing_sample_coverage']}: "
             + ", ".join(format_experiment_ref(row) for row in missing[:3])
-            + (f", +{len(missing) - 3} more" if len(missing) > 3 and language == "en" else "")
+            + (f", +{len(missing) - 3} more" if len(missing) > 3 else "")
         )
-        if len(missing) > 3 and language == "zh-CN":
-            lines[-1] += f"，另有 {len(missing) - 3} 个"
     return lines
 
 
@@ -469,7 +436,11 @@ def main() -> int:
     metric_rows = read_csv_rows(data_dir / "archetype-metrics.csv")
 
     if not plan_rows:
-        raise FileNotFoundError(f"Missing or empty experiment plan: {data_dir / 'experiment-plan.csv'}")
+        raise FileNotFoundError(
+            "Missing or empty experiment plan: "
+            f"{data_dir / 'experiment-plan.csv'}. "
+            "Scaffold with --with-support-files or add experiment support CSVs before regenerating summaries."
+        )
 
     title = parse_manifest_title(docs_dir, language)
     if args.mode == "both" and args.output:

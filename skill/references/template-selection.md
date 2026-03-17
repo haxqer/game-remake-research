@@ -30,8 +30,9 @@ Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill ro
 2. Record it in `research-manifest.yaml`.
 3. If needed, add a secondary lens in `secondary_lenses`.
 4. Generate the archetype file with `scaffold_remake_docs.py --archetype ...` and a concrete `--version-scope` when the pack will later be audited or handed off.
-5. Read the matching template reference file and matching metrics reference file.
-6. Only then add a secondary template if gaps remain.
+5. Remember that `scaffold_remake_docs.py` currently supports only `--language en`; keep the working pack in English while audit, status, and handoff scripts are still in play.
+6. Read the matching template reference file and matching metrics reference file.
+7. Only then add a secondary template if gaps remain.
 
 ## Script Example
 
@@ -41,6 +42,9 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/scaffold_remake_docs.py" \
   --out ./docs/remake-maplestory \
   --archetype mmo \
   --version-scope "KMS baseline as observed on 2026-03-01" \
-  --with-support-files \
-  --single-file
+  --language en \
+  --with-support-files
 ```
+
+Add `--single-file` only when you also want `remake-dossier-template.md` as a manual one-file writing template.
+Translate only a derived dossier or handoff artifact after the English pack is finished; do not rename working-pack section headings before running audit or handoff tooling.

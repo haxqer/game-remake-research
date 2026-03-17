@@ -1,31 +1,20 @@
 ---
 name: "game-remake-research"
-description: "Use when Codex must analyze or 拆解 an existing game into a source-backed remake / 复刻, 对标 / benchmark, competitor study, or vertical-slice research pack."
+description: "Source-backed analysis / 拆解 of an existing game into a remake / 复刻 teardown, benchmark / 对标, competitor study / 竞品分析, dossier, spec, formula set, experiment plan, handoff bundle, or vertical-slice research pack / 调研包. Use when the deliverable must separate original-game facts, inferences, and remake decisions. Do not use for generic brainstorming, casual recommendations, implementation-only work, or one-off mechanic explanations."
 ---
 
 # Game Remake Research
 
-Turn an existing game into source-backed remake documentation. Use this skill for remake, `复刻`, `对标`, benchmark, or vertical-slice research packs, not for generic brainstorming or casual comparisons.
-
-## Use This Skill When
-
-- The user wants to analyze an existing game as reference material for a remake or competitor study.
-- The deliverable should be a source-backed pack, dossier, spec, formula set, experiment plan, or handoff bundle.
-- The work must separate original-game facts from remake decisions and unknowns.
-
-## Do Not Use This Skill When
-
-- The user only wants a short opinion, recommendation, or surface-level comparison.
-- The task is implementation-only and does not need research deliverables.
-- The user only wants one narrow mechanic explained without a broader research pack.
+Turn an existing game into source-backed remake documentation. Use this skill for remake teardowns, benchmarks, competitor studies, or vertical-slice research packs, not for generic brainstorming or casual comparisons.
 
 ## Start
 
 - Lock the target game, edition or era, platform set, region, and time slice before writing conclusions.
 - If the target is live-service and the user says `latest`, `current`, `live`, `today`, or similar, browse first and cite exact dates or build windows.
 - Treat repo-local GDDs, spreadsheets, and technical docs as target-state inputs, not evidence about the original game.
-- Pick one primary archetype lens. Read `references/template-selection.md` first, then load only the chosen `template-*.md` and `metrics-*.md` pair unless a secondary lens is clearly required.
-- Scaffold the output pack before deep research. For packs that will be audited or handed off, pass a concrete `--version-scope`.
+- Pick one primary archetype lens. Read `references/template-selection.md` first, then load only one explicit pair unless a secondary lens is clearly required: `mmo -> template-mmo.md + metrics-mmo.md`, `arpg -> template-arpg.md + metrics-arpg.md`, `roguelike -> template-roguelike.md + metrics-roguelike.md`, `card -> template-card.md + metrics-card.md`.
+- Scaffold the output pack before deep research. For packs that will be audited or handed off, pass a concrete `--version-scope` and usually add `--with-support-files`.
+- Scaffold templates currently support only `--language en`. Keep the working research pack in English if you still need `audit_remake_pack.py`, `audit_evidence_links.py`, `build_pack_status_report.py`, or `build_handoff_bundle.py`. If the final deliverable must ship in another language, translate a derived dossier or handoff artifact after the English pack is complete.
 
 ```bash
 python3 "$GAME_REMAKE_RESEARCH/scripts/scaffold_remake_docs.py" \
@@ -33,12 +22,13 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/scaffold_remake_docs.py" \
   --out ./docs/remake-maplestory \
   --archetype mmo \
   --version-scope "KMS baseline as observed on 2026-03-01" \
-  --language zh-CN \
-  --with-support-files \
-  --single-file
+  --language en \
+  --with-support-files
 ```
 
 Example assumes `$GAME_REMAKE_RESEARCH` points at the skill root. If that variable is unset, run the same script from this skill's local `scripts/` directory.
+Add `--with-support-files` when the pack should later regenerate experiment summaries or run evidence, status, and handoff tooling against structured support data.
+Add `--single-file` only when you also want `remake-dossier-template.md` as a manual one-file writing template.
 
 ## Workflow
 
@@ -50,6 +40,7 @@ Example assumes `$GAME_REMAKE_RESEARCH` points at the skill root. If that variab
 ## Load These References As Needed
 
 - Planning and structure: `references/template-selection.md`, `references/research-workflow.md`, `references/role-matrix.md`, `references/deliverables.md`
+- Archetype lenses: `references/template-mmo.md`, `references/metrics-mmo.md`, `references/template-arpg.md`, `references/metrics-arpg.md`, `references/template-roguelike.md`, `references/metrics-roguelike.md`, `references/template-card.md`, `references/metrics-card.md`
 - Evidence and capture: `references/evidence-rubric.md`, `references/citation-style.md`, `references/capture-methods.md`
 - Experiments and metrics: `references/experiment-design.md`, `references/metric-rollup.md`, `references/experiment-summary.md`, `references/evidence-link-audit.md`
 - Finish and handoff: `references/pack-audit.md`, `references/status-report.md`, `references/handoff-bundle.md`
@@ -71,6 +62,12 @@ Example assumes `$GAME_REMAKE_RESEARCH` points at the skill root. If that variab
 - Review and handoff: `build_pack_status_report.py`, `build_handoff_bundle.py`
 
 If the user wants one final document, merge the pack in the order defined by `references/deliverables.md`.
+
+```bash
+python3 "$GAME_REMAKE_RESEARCH/scripts/merge_remake_docs.py" \
+  --docs-dir ./docs/remake-maplestory \
+  --mode full
+```
 
 ## Common Failure Modes
 

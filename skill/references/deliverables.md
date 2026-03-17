@@ -16,29 +16,30 @@ Use the scaffold script to create the pack. The default structure is:
 5. `04-content-art-audio-narrative.md`
 6. `05-client-architecture-and-production.md`
 7. `06-replica-backlog-and-acceptance.md`
-8. `99-research-log.md`
+8. `09-experiment-design.md`
+9. `99-research-log.md`
 
 If the user wants one long document, merge the same sections in that order.
 
-- `merge_remake_docs.py --mode full` keeps the full pack structure.
+```bash
+python3 "$GAME_REMAKE_RESEARCH/scripts/merge_remake_docs.py" \
+  --docs-dir ./docs/remake-maplestory \
+  --mode full
+```
+
+- `merge_remake_docs.py --mode full` keeps the full pack structure and writes `remake-dossier.md` by default.
 - `merge_remake_docs.py --mode compact` omits `09-experiment-design.md` and prefers `10-experiment-summary-compact.md`, falling back to `10-experiment-summary.md`.
 
 When `--archetype` is set, also create:
 
-9. `07-archetype-specific-template.md`
-10. `08-archetype-metric-baselines.md`
+10. `07-archetype-specific-template.md`
+11. `08-archetype-metric-baselines.md`
 
-When experiment support is enabled through `--with-support-files`, also create:
+Insert those archetype docs before `09-experiment-design.md` when merging in numeric file order.
 
-11. `09-experiment-design.md`
-12. `10-experiment-summary.md`
+When `--with-support-files` is set, also scaffold:
 
-Optional generated derivative for compact dossier merges:
-
-13. `10-experiment-summary-compact.md`
-
-Optional support files:
-
+- `10-experiment-summary.md` as the summary placeholder that `summarize_experiments.py` later regenerates from CSV support data
 - `research-manifest.yaml`
 - `data/source-ledger.csv`
 - `data/formula-catalog.csv`
@@ -51,6 +52,17 @@ Optional support files:
 - `data/archetype-checklist.csv` when `--archetype` is set
 - `data/archetype-metrics.csv` when `--archetype` is set
 - `data/archetype-metric-links.csv` when `--archetype` is set
+
+Optional generated derivative for compact dossier merges:
+
+12. `10-experiment-summary-compact.md`
+
+Optional manual single-file template created by `scaffold_remake_docs.py --single-file`:
+
+13. `remake-dossier-template.md`
+
+Optional generated derivatives created by follow-up scripts:
+
 - `reports/evidence-link-audit.md` optional evidence-link integrity report
 - `reports/pack-status.md` optional generated status report
 - `reports/pack-status-compact.md` optional compact status report
@@ -58,9 +70,8 @@ Optional support files:
 - `handoff-full-dossier.md` optional generated full handoff dossier
 - `handoff-compact-dossier.md` optional generated compact handoff dossier
 
-Generate them with `scaffold_remake_docs.py --with-support-files`.
-
-If the user wants a merged dossier after writing the pack, use `merge_remake_docs.py`.
+If the user wants a merged dossier after writing the pack, use `merge_remake_docs.py --docs-dir ./docs/remake-maplestory`.
+Keep the working pack in English until audit, evidence, status, and handoff scripts are done; translate only a derived dossier or handoff artifact afterward.
 Generate `10-experiment-summary-compact.md` first when the goal is an external-facing or shorter dossier.
 Run `audit_remake_pack.py` before final handoff so missing sections, empty scaffolds, and incomplete support files are caught explicitly.
 Run `audit_evidence_links.py` when the pack uses source ledgers and support CSVs so dangling or stale source IDs are caught before handoff.
