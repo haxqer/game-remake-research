@@ -19,6 +19,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Validate skill layout
+        run: |
+          test -f skill/SKILL.md
+          test -f skill/agents/openai.yaml
+          test -d skill/references
+          test -d skill/scripts
+
       - name: Validate scripts
         run: |
           python -m compileall skill/scripts

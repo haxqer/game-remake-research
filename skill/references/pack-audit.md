@@ -2,6 +2,8 @@
 
 Use this reference when a remake research pack needs a fast quality gate before merge or handoff.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Purpose
 
 `audit_remake_pack.py` checks for:

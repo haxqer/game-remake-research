@@ -2,6 +2,8 @@
 
 Use one primary archetype template and at most one secondary lens. Do not load all four unless the user explicitly wants a hybrid comparison.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Primary Lens Decision
 
 | Template | Choose when the game primarily wins on | Watch out for |

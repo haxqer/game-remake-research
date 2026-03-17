@@ -2,6 +2,8 @@
 
 Use this reference when typed experiment data should flow back into `data/archetype-metrics.csv`.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Files
 
 - `data/archetype-metrics.csv`

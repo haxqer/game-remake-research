@@ -2,6 +2,8 @@
 
 Use this reference when a remake research pack should be packaged for review, takeover, or milestone handoff in one command.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Purpose
 
 `build_handoff_bundle.py` orchestrates the derived artifacts that usually get regenerated together:

@@ -2,6 +2,8 @@
 
 Use this reference when a remake research pack needs a one-file progress snapshot for handoff, takeover, producer review, or milestone check-ins.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Purpose
 
 `build_pack_status_report.py` generates a markdown report that combines:

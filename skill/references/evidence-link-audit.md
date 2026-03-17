@@ -2,6 +2,8 @@
 
 Use this reference when a remake research pack has a source ledger and you need to verify that every structured `source_id` or `source_ids` reference still resolves cleanly.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Purpose
 
 `audit_evidence_links.py` checks:

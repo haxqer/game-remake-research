@@ -2,6 +2,8 @@
 
 Use this reference when raw experiment CSV data needs to be turned into a compact markdown brief for the remake pack.
 
+Command examples assume `$GAME_REMAKE_RESEARCH` points at the installed skill root. If it is unset, run the same script from this skill's local `scripts/` directory.
+
 ## Purpose
 
 `10-experiment-summary.md` should answer:

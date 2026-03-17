@@ -76,7 +76,7 @@ After that, Codex can use `$game-remake-research` from the installed `skill/` pa
 If you install from GitHub instead of a local clone, target the `skill/` subdirectory rather than the repo root:
 
 ```bash
-python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
   --repo haxqer/game-remake-research \
   --path skill
 ```
@@ -84,7 +84,7 @@ python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-g
 Or use the direct GitHub tree URL:
 
 ```bash
-python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
   --url https://github.com/haxqer/game-remake-research/tree/main/skill
 ```
 
