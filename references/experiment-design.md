@@ -1,5 +1,13 @@
 # Experiment Design
 
+## Contents
+
+- `Purpose`
+- `Core Experiment Types`
+- `Working Rules`
+- `Minimal CSV Workflow`
+- `Anti-Patterns`
+
 Use this reference when research needs disciplined sampling instead of narrative-only notes.
 
 ## Purpose

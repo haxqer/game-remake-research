@@ -1,4 +1,4 @@
 interface:
   display_name: "Game Remake Research"
-  short_description: "Deep game teardown into remake-ready docs"
-  default_prompt: "Use $game-remake-research to deeply research an existing game and draft a multi-role remake-ready documentation pack."
+  short_description: "Source-backed remake research packs"
+  default_prompt: "Use $game-remake-research to turn an existing game into a source-backed remake or vertical-slice research pack."

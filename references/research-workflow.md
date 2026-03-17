@@ -1,5 +1,17 @@
 # Research Workflow
 
+## Contents
+
+- `1. Lock Scope First`
+- `2. Build The Source Map`
+- `3. Run An Observation Pass`
+- `4. Work In Role Order`
+- `5. Separate Four Layers In Every Section`
+- `6. Convert Research Into Replica Specs`
+- `7. Handle Gaps Explicitly`
+- `8. Keep The Pack Coherent`
+- `9. Finish With Buildable Next Steps`
+
 ## 1. Lock Scope First
 
 Do not begin with generic notes. Start by pinning:

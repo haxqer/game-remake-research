@@ -1,5 +1,12 @@
 # Deliverables
 
+## Contents
+
+- `Default Structure`
+- `Required Content Per File`
+- `Cross-Document Standards`
+- `Done Criteria`
+
 Use the scaffold script to create the pack. The default structure is:
 
 1. `00-overview-and-source-ledger.md`

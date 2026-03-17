@@ -27,7 +27,7 @@ Use one primary archetype template and at most one secondary lens. Do not load a
 1. Pick the primary lens.
 2. Record it in `research-manifest.yaml`.
 3. If needed, add a secondary lens in `secondary_lenses`.
-4. Generate the archetype file with `scaffold_remake_docs.py --archetype ...`.
+4. Generate the archetype file with `scaffold_remake_docs.py --archetype ...` and a concrete `--version-scope` when the pack will later be audited or handed off.
 5. Read the matching template reference file and matching metrics reference file.
 6. Only then add a secondary template if gaps remain.
 
@@ -38,6 +38,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/scaffold_remake_docs.py" \
   --game "MapleStory" \
   --out ./docs/remake-maplestory \
   --archetype mmo \
+  --version-scope "KMS baseline as observed on 2026-03-01" \
   --with-support-files \
   --single-file
 ```
