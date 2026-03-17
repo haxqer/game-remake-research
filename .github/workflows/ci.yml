@@ -21,15 +21,15 @@ jobs:
 
       - name: Validate scripts
         run: |
-          python -m compileall scripts
-          for script in scripts/*.py; do
+          python -m compileall skill/scripts
+          for script in skill/scripts/*.py; do
             python "$script" --help >/dev/null
           done
 
       - name: Smoke test repository workflow
         run: |
-          export GAME_REMAKE_RESEARCH="$GITHUB_WORKSPACE"
-          python ./scripts/scaffold_remake_docs.py \
+          export GAME_REMAKE_RESEARCH="$GITHUB_WORKSPACE/skill"
+          python ./skill/scripts/scaffold_remake_docs.py \
             --game "Smoke Test" \
             --out ./tmp/ci-pack \
             --archetype arpg \
@@ -37,23 +37,23 @@ jobs:
             --language en \
             --with-support-files \
             --single-file
-          python ./scripts/rollup_experiment_metrics.py --docs-dir ./tmp/ci-pack
-          python ./scripts/summarize_experiments.py --docs-dir ./tmp/ci-pack --mode full
-          python ./scripts/summarize_experiments.py \
+          python ./skill/scripts/rollup_experiment_metrics.py --docs-dir ./tmp/ci-pack
+          python ./skill/scripts/summarize_experiments.py --docs-dir ./tmp/ci-pack --mode full
+          python ./skill/scripts/summarize_experiments.py \
             --docs-dir ./tmp/ci-pack \
             --mode compact \
             --output 10-experiment-summary-compact.md
-          python ./scripts/audit_evidence_links.py \
+          python ./skill/scripts/audit_evidence_links.py \
             --docs-dir ./tmp/ci-pack \
             --output reports/evidence-link-audit.md
-          python ./scripts/build_pack_status_report.py --docs-dir ./tmp/ci-pack --mode both
-          python ./scripts/merge_remake_docs.py \
+          python ./skill/scripts/build_pack_status_report.py --docs-dir ./tmp/ci-pack --mode both
+          python ./skill/scripts/merge_remake_docs.py \
             --input-dir ./tmp/ci-pack \
             --output smoke-dossier.md \
             --mode compact
-          python ./scripts/build_handoff_bundle.py \
+          python ./skill/scripts/build_handoff_bundle.py \
             --docs-dir ./tmp/ci-pack \
             --dossier-mode compact \
             --report-mode both \
             --rollup-metrics
-          python ./scripts/audit_remake_pack.py --docs-dir ./tmp/ci-pack
+          python ./skill/scripts/audit_remake_pack.py --docs-dir ./tmp/ci-pack

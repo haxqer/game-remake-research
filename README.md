@@ -11,10 +11,11 @@ This repo helps you turn an existing game into a remake-ready research pack with
 
 ## Repository Layout
 
-- `SKILL.md`: the skill definition used by Codex
-- `references/`: research workflow, templates, rubrics, and deliverable guides
-- `scripts/`: scaffold, merge, audit, rollup, summary, and handoff utilities
-- `agents/openai.yaml`: optional skill metadata for agent catalogs
+- `skill/`: the installable skill root
+- `skill/SKILL.md`: the skill definition used by Codex
+- `skill/references/`: research workflow, templates, rubrics, and deliverable guides
+- `skill/scripts/`: scaffold, merge, audit, rollup, summary, and handoff utilities
+- `skill/agents/openai.yaml`: optional skill metadata for agent catalogs
 
 ## Requirements
 
@@ -23,10 +24,10 @@ This repo helps you turn an existing game into a remake-ready research pack with
 
 ## Quick Start
 
-Run directly from the repository root:
+Run the bundled utilities from the repository root:
 
 ```bash
-python3 ./scripts/scaffold_remake_docs.py \
+python3 ./skill/scripts/scaffold_remake_docs.py \
   --game "Hollow Knight" \
   --out ./docs/remake-hollow-knight \
   --archetype arpg \
@@ -39,22 +40,22 @@ python3 ./scripts/scaffold_remake_docs.py \
 If you want the generated status reports and handoff notes to print copy-pasteable commands, set this once in your shell before working:
 
 ```bash
-export GAME_REMAKE_RESEARCH="$PWD"
+export GAME_REMAKE_RESEARCH="$PWD/skill"
 ```
 
-Those generated docs assume the shell is inside the research pack root and use `$GAME_REMAKE_RESEARCH/scripts/...` to locate the repo scripts reliably.
+Those generated docs assume the shell is inside the research pack root and use `$GAME_REMAKE_RESEARCH/scripts/...` to locate the installed skill scripts reliably.
 
 ## Common Commands
 
 ```bash
-python3 ./scripts/merge_remake_docs.py \
+python3 ./skill/scripts/merge_remake_docs.py \
   --input-dir ./docs/remake-hollow-knight \
   --output hollow-knight-dossier.md \
   --mode compact
 ```
 
 ```bash
-python3 ./scripts/build_handoff_bundle.py \
+python3 ./skill/scripts/build_handoff_bundle.py \
   --docs-dir ./docs/remake-hollow-knight \
   --dossier-mode compact \
   --report-mode both \
@@ -67,10 +68,25 @@ Clone this repo wherever you want, then either symlink or copy it into your Code
 
 ```bash
 export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
-ln -s "$PWD" "$CODEX_HOME/skills/game-remake-research"
+ln -s "$PWD/skill" "$CODEX_HOME/skills/game-remake-research"
 ```
 
-After that, Codex can use `$game-remake-research` from the installed skill path.
+After that, Codex can use `$game-remake-research` from the installed `skill/` path.
+
+If you install from GitHub instead of a local clone, target the `skill/` subdirectory rather than the repo root:
+
+```bash
+python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+  --repo haxqer/game-remake-research \
+  --path skill
+```
+
+Or use the direct GitHub tree URL:
+
+```bash
+python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+  --url https://github.com/haxqer/game-remake-research/tree/main/skill
+```
 
 ## Local Verification
 

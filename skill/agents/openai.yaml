@@ -1,4 +1,4 @@
 interface:
   display_name: "Game Remake Research"
-  short_description: "Source-backed remake research packs"
+  short_description: "Source-backed game remake research"
   default_prompt: "Use $game-remake-research to turn an existing game into a source-backed remake or vertical-slice research pack."

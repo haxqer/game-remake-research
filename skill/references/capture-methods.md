@@ -2,6 +2,15 @@
 
 Use this reference when extracting timings, formulas, UI flows, and production-relevant detail from footage or documents.
 
+## Contents
+
+- `Timing Capture`
+- `Economy Sampling`
+- `Progression Band Capture`
+- `UI Flow Capture`
+- `Audio Capture`
+- `Copy And Narrative Capture`
+
 ## Timing Capture
 
 For attacks, skills, dodges, and boss telegraphs:
