@@ -10,6 +10,7 @@ from pathlib import Path
 
 DEFAULT_OUTPUT = "remake-dossier.md"
 DEFAULT_MODE = "full"
+DOSSIER_TEMPLATE_FILE = "remake-dossier-template.md"
 EXPERIMENT_DESIGN_FILE = "09-experiment-design.md"
 EXPERIMENT_SUMMARY_FILE = "10-experiment-summary.md"
 EXPERIMENT_SUMMARY_COMPACT_FILE = "10-experiment-summary-compact.md"
@@ -29,12 +30,13 @@ def load_title(path: Path) -> str:
     return path.stem
 
 
-def contains_cjk(text: str) -> bool:
-    return bool(re.search(r"[\u4e00-\u9fff]", text))
-
-
 def is_generated_dossier(path: Path) -> bool:
-    return path.name == DEFAULT_OUTPUT or path.name.endswith("-dossier.md")
+    return (
+        path.name == DEFAULT_OUTPUT
+        or path.name == DOSSIER_TEMPLATE_FILE
+        or path.name.endswith("-dossier.md")
+        or path.name.endswith("-dossier-template.md")
+    )
 
 
 def select_experiment_summary(paths: list[Path], mode: str) -> set[str]:
@@ -79,7 +81,7 @@ def collect_markdown_files(
 
 
 def build_output(title: str, files: list[Path]) -> str:
-    contents_heading = "目录" if contains_cjk(title) else "Contents"
+    contents_heading = "Contents"
     lines = [f"# {title}", "", f"## {contents_heading}", ""]
     for path in files:
         heading = load_title(path)
@@ -99,7 +101,15 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Merge a remake research pack into a single markdown dossier."
     )
-    parser.add_argument("--input-dir", required=True, help="Directory with markdown files.")
+    directory = parser.add_mutually_exclusive_group(required=True)
+    directory.add_argument(
+        "--docs-dir",
+        help="Research pack directory.",
+    )
+    directory.add_argument(
+        "--input-dir",
+        help="Legacy alias for --docs-dir.",
+    )
     parser.add_argument(
         "--output",
         default=DEFAULT_OUTPUT,
@@ -133,7 +143,8 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    input_dir = Path(args.input_dir).expanduser().resolve()
+    input_dir_arg = args.docs_dir or args.input_dir
+    input_dir = Path(input_dir_arg).expanduser().resolve()
     if not input_dir.is_dir():
         raise NotADirectoryError(f"{input_dir} is not a directory.")
 

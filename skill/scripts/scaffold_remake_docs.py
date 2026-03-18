@@ -10,6 +10,9 @@ from pathlib import Path
 from textwrap import dedent, indent
 
 
+SKILL_ROOT = Path(__file__).resolve().parent.parent
+
+
 ARCHETYPE_CHOICES = ("mmo", "arpg", "roguelike", "card")
 ARCHETYPE_FILE_NAME = "07-archetype-specific-template.md"
 ARCHETYPE_METRIC_FILE_NAME = "08-archetype-metric-baselines.md"
@@ -516,7 +519,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'cancel_rule',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-01', 'TIMING-001', 'S1', '', '', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-01', 'TIMING-001', '', '', '', '', '', '', '', '', '', '']},
  'EXP-02': {'file': 'data/experiments/route-density-sample.csv',
             'header': ['experiment_id',
                        'sample_id',
@@ -530,7 +533,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'reward_summary',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-02', 'ROUTE-001', 'S1', '', '', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-02', 'ROUTE-001', '', '', '', '', '', '', '', '', '', '']},
  'EXP-03': {'file': 'data/experiments/economy-sampling.csv',
             'header': ['experiment_id',
                        'sample_id',
@@ -544,7 +547,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'net_result',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-03', 'ECON-001', 'S1', '', '', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-03', 'ECON-001', '', '', '', '', '', '', '', '', '', '']},
  'EXP-04': {'file': 'data/experiments/progression-band-map.csv',
             'header': ['experiment_id',
                        'band_id',
@@ -556,7 +559,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'exit_condition',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-04', 'BAND-001', 'S1', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-04', 'BAND-001', '', '', '', '', '', '', '', '']},
  'EXP-05': {'file': 'data/experiments/onboarding-funnel.csv',
             'header': ['experiment_id',
                        'step_id',
@@ -568,7 +571,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'payoff',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-05', 'ONBOARD-001', 'S1', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-05', 'ONBOARD-001', '', '', '', '', '', '', '', '']},
  'EXP-06': {'file': 'data/experiments/ui-flow-count.csv',
             'header': ['experiment_id',
                        'task_id',
@@ -581,7 +584,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'completion_state',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-06', 'UIFLOW-001', 'S1', '', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-06', 'UIFLOW-001', '', '', '', '', '', '', '', '', '']},
  'EXP-07': {'file': 'data/experiments/failure-reentry.csv',
             'header': ['experiment_id',
                        'sample_id',
@@ -593,7 +596,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'penalty_summary',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-07', 'FAIL-001', 'S1', '', '', '', '', '', 'Open', '']},
+            'sample': ['EXP-07', 'FAIL-001', '', '', '', '', '', '', '', '']},
  'EXP-08': {'file': 'data/experiments/state-log.csv',
             'header': ['experiment_id',
                        'sample_id',
@@ -605,7 +608,7 @@ EXPERIMENT_DETAIL_TEMPLATES = {'EXP-01': {'file': 'data/experiments/timing-captu
                        'resolution_outcome',
                        'confidence',
                        'notes'],
-            'sample': ['EXP-08', 'STATE-001', 'S1', '1', '', '', '', '', 'Open', '']}}
+            'sample': ['EXP-08', 'STATE-001', '', '', '', '', '', '', '', '']}}
 
 ARCHETYPE_EXPERIMENT_PRIORITIES = {'mmo': {'EXP-01': 'medium',
          'EXP-02': 'high',
@@ -934,15 +937,16 @@ def build_experiment_summary_placeholder(
 ## Regeneration Command
 
 ```bash
-python3 "${{GAME_REMAKE_RESEARCH:?set GAME_REMAKE_RESEARCH to the installed skill root}}/scripts/summarize_experiments.py" \
-  --docs-dir ./docs/remake-{slugify(game)} \
+python3 "${{GAME_REMAKE_RESEARCH:-{SKILL_ROOT}}}/scripts/summarize_experiments.py" \\
+  --docs-dir . \\
   --mode full
 ```
 
 ## Notes
 
 - Update `data/experiment-plan.csv`, `data/experiment-observations.csv`, and `data/experiments/*.csv` before regenerating.
-- Set `GAME_REMAKE_RESEARCH` to the installed skill root before running the command.
+- Run the command from the pack root.
+- If the pack moves to another machine, set `GAME_REMAKE_RESEARCH` to the installed skill root before running the command.
 - If metric rollup has already been run, the summary will also include a snapshot of `data/archetype-metrics.csv`.
 - For final dossier use, also generate `10-experiment-summary-compact.md`:
   `summarize_experiments.py --mode compact --output 10-experiment-summary-compact.md`
@@ -1072,9 +1076,9 @@ def build_documents_en(
 
             | ID | Type | Link or location | Version/date | Confidence | Notes |
             | --- | --- | --- | --- | --- | --- |
-            | S1 | Official |  |  | Confirmed |  |
-            | S2 | Gameplay footage |  |  | Confirmed |  |
-            | S3 | Wiki / datamine |  |  | Inferred |  |
+            |  | Official |  |  | Confirmed |  |
+            |  | Gameplay footage |  |  | Confirmed |  |
+            |  | Wiki / datamine |  |  | Inferred |  |
 
             ## Evidence Citation Rule
 
@@ -1344,7 +1348,7 @@ def build_documents_en(
 
             | Date | Source ID | Topic | Observation | Confidence | Follow-up |
             | --- | --- | --- | --- | --- | --- |
-            |  | S1 |  |  | Confirmed |  |
+            |  |  |  |  |  |  |
 
             ## Frame / Timing Notes
 
@@ -1389,9 +1393,9 @@ def build_support_files_en(
         "data/source-ledger.csv": dedent(
             """\
             source_id,source_type,title,url_or_location,platform,region,version_or_date,confidence,notes
-            S1,official,,,,,,Confirmed,
-            S2,gameplay-footage,,,,,,Confirmed,
-            S3,wiki-or-datamine,,,,,,Inferred,
+            ,official,,,,,,Confirmed,
+            ,gameplay-footage,,,,,,Confirmed,
+            ,wiki-or-datamine,,,,,,Inferred,
             """
         ),
         "data/formula-catalog.csv": dedent(

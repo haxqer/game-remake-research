@@ -35,7 +35,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \
   --mode full
 ```
 
-Use `--language en` or `--language zh-CN` when the summary should not follow pack auto-detection.
+Use `--language en` when you want to pin the output explicitly. `--language auto` currently resolves to `en`.
 If the pack also uses `data/archetype-metric-links.csv`, stale-summary repair commands now pair summary regeneration with `rollup_experiment_metrics.py` first so metric snapshots stay aligned.
 
 When the final merge should stay concise, also run:
@@ -56,7 +56,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/summarize_experiments.py" \
   --language en
 ```
 
-`merge_remake_docs.py --mode compact` will prefer `10-experiment-summary-compact.md` when it exists.
+`merge_remake_docs.py --docs-dir ./docs/remake-maplestory --mode compact` will prefer `10-experiment-summary-compact.md` when it exists.
 
 ## Expectations
 

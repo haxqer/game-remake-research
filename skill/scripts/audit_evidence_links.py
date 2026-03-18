@@ -60,39 +60,6 @@ LABELS = {
         "warn_docs": "These docs contain evidence-section content, but the section text has no inline ledger citations.",
         "summary": "Evidence audit result: {status} | ledger={ledger} referenced={referenced} unknown={unknown} unused={unused} blank={blank} duplicates={duplicates} doc_gaps={doc_gaps}",
     },
-    "zh-CN": {
-        "title": "{game} 证据引用审计",
-        "status": "审计状态",
-        "snapshot": "总览",
-        "ledger_ids": "台账 Source ID 数",
-        "referenced_ids": "被引用 Source ID 数",
-        "unknown_ids": "未知 Source ID 数",
-        "unused_ids": "未使用台账 Source ID 数",
-        "blank_refs": "缺少来源引用的行数",
-        "duplicates": "重复台账 Source ID 数",
-        "missing_files": "缺失结构化文件数",
-        "markdown_docs": "扫描的 Markdown 文档数",
-        "docs_without_citations": "证据章节缺少正文引用的文档数",
-        "findings": "发现",
-        "unknown_section": "未知 Source ID",
-        "unused_section": "未使用的台账 Source ID",
-        "blank_section": "缺少来源引用的行",
-        "duplicate_section": "重复的台账 Source ID",
-        "missing_section": "缺失文件",
-        "doc_section": "缺少内联引用的证据章节",
-        "no_items": "无。",
-        "headers_unknown": ("Source ID", "引用位置"),
-        "headers_unused": ("Source ID", "来源类型", "标题"),
-        "headers_blank": ("位置", "行", "字段"),
-        "headers_missing": ("路径",),
-        "headers_duplicate": ("Source ID", "次数"),
-        "headers_docs": ("文档", "缺少引用的章节"),
-        "fail_unknown": "未知 Source ID 需要补入 data/source-ledger.csv，或从引用处移除。",
-        "warn_unused": "未使用的台账 Source ID 通常意味着台账陈旧，或来源已记录但从未被引用。",
-        "warn_blank": "缺少来源引用说明该行已经有研究数据，但没有可追溯证据。",
-        "warn_docs": "这些文档的证据章节已经有内容，但章节正文里还没有内联台账引用。",
-        "summary": "证据审计结果: {status} | 台账={ledger} 引用={referenced} 未知={unknown} 未用={unused} 缺失来源={blank} 重复={duplicates} 文档缺口={doc_gaps}",
-    },
 }
 
 
@@ -138,9 +105,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--language",
-        choices=("auto", "en", "zh-CN"),
+        choices=("auto", "en"),
         default="auto",
-        help="Output language. Defaults to auto-detection from the pack.",
+        help="Output language. Defaults to auto, which currently resolves to en.",
     )
     parser.add_argument(
         "--strict",
@@ -237,12 +204,23 @@ def add_single_source_refs(
     references: dict[str, list[str]],
     blank_refs: list[BlankReference],
 ) -> None:
+    ignored_fields = {
+        field,
+        "notes",
+        "confidence",
+        "experiment_id",
+        "sample_id",
+        "task_id",
+        "band_id",
+        "step_id",
+        "state_index",
+    }
     for index, row in enumerate(rows, start=2):
         label = row_label(row, index)
         source_id = row.get(field, "").strip()
         if source_id:
             references[source_id].append(f"{location}:{label}")
-        elif row_has_payload(row, {field, "notes", "confidence"}):
+        elif row_has_payload(row, ignored_fields):
             blank_refs.append(BlankReference(location, label, field))
 
 
@@ -255,7 +233,7 @@ def parse_research_log(
     data_rows = 0
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()
-        if line.startswith("| Date | Source ID |") or line.startswith("| 日期 | Source ID |"):
+        if line.startswith("| Date | Source ID |"):
             in_table = True
             data_rows = 0
             continue

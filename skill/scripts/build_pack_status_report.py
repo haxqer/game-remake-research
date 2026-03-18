@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import shlex
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -32,6 +33,9 @@ from audit_remake_pack import (
     read_text,
     run_audit,
 )
+
+
+SKILL_ROOT = Path(__file__).resolve().parent.parent
 
 
 LANG = {
@@ -168,139 +172,6 @@ LANG = {
         "no": "no",
         "not_available": "not available",
     },
-    "zh-CN": {
-        "title": "{game} 调研包状态报告",
-        "snapshot": "总览",
-        "audit_result": "审计结果",
-        "error_count": "错误数",
-        "warning_count": "警告数",
-        "baseline": "基线版本",
-        "archetype": "品类镜头",
-        "support": "Support 文件",
-        "experiments": "实验支持",
-        "evidence": "证据追溯",
-        "evidence_status": "证据审计",
-        "evidence_priority": "最高证据优先级",
-        "unknown_sources": "未知 Source ID",
-        "duplicate_sources": "重复 Source ID",
-        "blank_source_refs": "缺少来源引用的行",
-        "unused_sources": "未使用台账 Source ID",
-        "doc_citation_gaps": "缺少内联引用的文档",
-        "stale_experiment_summaries": "过期的 experiment summary",
-        "stale_evidence_audits": "过期的 evidence audit",
-        "stale_status_reports": "过期的状态报告",
-        "stale_handoff_dossiers": "过期的 handoff dossier",
-        "stale_handoff_manifests": "过期的 handoff manifest",
-        "duplicate_source_rows": "重复 Source ID 明细",
-        "unknown_source_refs": "未知来源引用明细",
-        "blank_ref_rows": "缺少来源引用的行明细",
-        "unused_source_rows": "未使用台账来源明细",
-        "doc_citation_rows": "缺少内联引用的文档明细",
-        "documents": "核心文档状态",
-        "placeholder_hotspots": "占位热点",
-        "folded_docs": "compact 视图另折叠了 {count} 个文档。",
-        "file": "文件",
-        "status": "状态",
-        "missing_sections": "缺失章节",
-        "blank_placeholders": "空白占位",
-        "support_data": "Support 数据快照",
-        "sources_with_evidence": "已补全来源数",
-        "formulas_captured": "已记录公式数",
-        "assets_detailed": "已有制作细节的资产行数",
-        "risks_populated": "已补全风险数",
-        "role_coverage": "角色覆盖",
-        "roles_summary": "角色状态分布",
-        "role": "角色",
-        "key_findings": "关键发现",
-        "missing_evidence": "缺失证据",
-        "archetype_snapshot": "品类快照",
-        "checklist_progress": "Checklist 进度",
-        "metric_progress": "已观测指标",
-        "experiments_snapshot": "实验快照",
-        "plan_status": "计划状态",
-        "registry_status": "登记状态",
-        "raw_samples": "原始样本数",
-        "detail_file": "明细文件",
-        "samples": "样本数",
-        "findings": "审计发现",
-        "errors": "错误",
-        "warnings": "警告",
-        "no_errors": "无错误。",
-        "no_warnings": "无警告。",
-        "none": "无。",
-        "source_id": "Source ID",
-        "references": "引用位置",
-        "location": "位置",
-        "row": "行",
-        "field": "字段",
-        "count": "次数",
-        "source_type": "来源类型",
-        "title_col": "标题",
-        "document": "文档",
-        "sections": "章节",
-        "more_locations": "另有 {count} 处",
-        "priority": "优先级",
-        "priority_blocker": "阻断",
-        "priority_high": "高",
-        "priority_medium": "中",
-        "priority_low": "低",
-        "priority_none": "无",
-        "group_scope": "范围与结构",
-        "group_placeholders": "模板占位",
-        "group_support_data": "Support 数据",
-        "group_generated_artifacts": "派生产物",
-        "group_progress": "推进信号",
-        "group_other": "其他",
-        "omitted_group_items": "本组另有 {count} 条。",
-        "folded_docs": "compact 视图另折叠了 {count} 个文档。",
-        "names_more": "另有 {count} 个",
-        "support_missing_sources": "来源台账仍缺少带日期的有效证据行。",
-        "support_missing_formulas": "公式台账还没有任何已记录公式。",
-        "support_missing_assets": "资产分类表还没有任何带制作细节的行。",
-        "support_missing_risks": "风险登记表还没有任何已填风险。",
-        "support_ok": "当前跟踪的 support 表都至少有一条有效数据。",
-        "roles_blocked": "仍处于 not-started 的角色: `{count}`（{roles}）",
-        "roles_active": "角色覆盖摘要: {summary}",
-        "roles_ok": "角色覆盖里没有阻塞状态。",
-        "archetype_checklist_gap": "尚未推进的 checklist 项: `{remaining}` / `{total}`",
-        "archetype_metric_gap": "尚未补 observed band 的指标: `{remaining}` / `{total}`",
-        "archetype_ok": "archetype checklist 和指标基线都已有推进。",
-        "experiments_raw_gap": "仍缺原始样本的实验: `{count}`（{experiments}）",
-        "experiments_plan_gap": "实验计划仍为 not-started: `{count}`（{experiments}）",
-        "experiments_registry_gap": "实验登记仍为 not-started: `{count}`（{experiments}）",
-        "experiments_ok": "实验跟踪已有推进。",
-        "next_actions": "建议下一步",
-        "no_actions": "当前没有强制动作。",
-        "status_ok": "正常",
-        "status_review": "待完善",
-        "status_missing": "缺失",
-        "action_restore_docs": "恢复缺失的核心文档: {value}",
-        "action_replace_placeholders": "优先替换 {value} 中的模板占位。",
-        "action_lock_baseline": "先锁定基线版本、区服、平台与时间切片。",
-        "action_populate_sources": "先补齐 `data/source-ledger.csv`，至少写入带日期的官方资料和实机来源。",
-        "action_advance_roles": "更新 `data/role-coverage.csv`，让每个角色都反映真实进度和缺失证据。",
-        "action_progress_checklist": "先推进最高优先级的 archetype checklist 项。",
-        "action_populate_metrics": "补充 observed metric band，或在采样后执行 metric rollup。",
-        "action_mark_plan": "把实验计划状态改成真实进度，不要整张表都停留在 `not-started`。",
-        "action_mark_plan_specific": "先更新 {value} 的 experiment-plan 状态，让计划反映真实推进。",
-        "action_update_registry": "更新 `data/experiment-observations.csv`，让实验登记反映真实采集进度。",
-        "action_update_registry_specific": "先更新 {value} 在 `data/experiment-observations.csv` 里的状态，让登记与真实采集一致。",
-        "action_capture_samples": "至少补一份 typed experiment sheet，让调研包有原始样本而不只是计划。",
-        "action_capture_samples_specific": "优先给 {value} 补 typed 原始样本。",
-        "action_fix_unknown_sources": "清理重复或未知的 `S-id` 引用，确保每个被引用来源都能在 `data/source-ledger.csv` 中唯一解析。",
-        "action_fix_blank_source_refs": "为已填内容的 support 行补齐 `source_id` / `source_ids`。",
-        "action_fix_doc_citations": "给已写内容的 `Confirmed Facts` / `Inferred Model` 补上内联 `S-id` 锚点。",
-        "action_review_unused_sources": "检查未使用的台账 Source ID，决定删除还是在正文中引用。",
-        "action_refresh_generated_bundle": "执行 {command}，一次性刷新这些过期的派生产物: {targets}。",
-        "action_refresh_experiment_summary": "执行 {command}，重新生成过期的 experiment summary: {value}。",
-        "action_refresh_evidence_audit": "执行 {command}，重新生成过期的 evidence audit 产物: {value}。",
-        "action_refresh_status_report": "执行 {command}，重新生成过期的状态报告: {value}。",
-        "action_refresh_handoff_dossier": "执行 {command}，重新生成过期的 handoff dossier: {value}。",
-        "action_refresh_handoff_bundle": "执行 {command}，重新生成过期的 handoff manifest: {value}。",
-        "yes": "是",
-        "no": "否",
-        "not_available": "不可用",
-    },
 }
 
 DEFAULT_OUTPUTS = {
@@ -409,9 +280,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--language",
-        choices=("auto", "en", "zh-CN"),
+        choices=("auto", "en"),
         default="auto",
-        help="Report language. Defaults to auto-detection from the pack.",
+        help="Report language. Defaults to auto, which currently resolves to en.",
     )
     return parser.parse_args()
 def format_status_counts(rows: list[dict[str, str]], field: str = "status") -> str:
@@ -697,18 +568,14 @@ def summarize_display_values(
 
 
 def shell_command(script_name: str, arguments: list[str]) -> str:
-    return (
-        "`python3 "
-        "\"${{GAME_REMAKE_RESEARCH:?set GAME_REMAKE_RESEARCH to the installed skill root}}/scripts/{script}\" "
-        "{args}`"
-    ).format(
-        script=script_name,
-        args=" ".join(arguments),
-    )
+    script_path = f'"${{GAME_REMAKE_RESEARCH:-{SKILL_ROOT}}}/scripts/{script_name}"'
+    args = shlex.join(arguments)
+    suffix = f" {args}" if args else ""
+    return f"`python3 {script_path}{suffix}`"
 
 
 def language_args(language: str) -> list[str]:
-    return ["--language", language] if language in {"en", "zh-CN"} else []
+    return ["--language", language] if language == "en" else []
 
 
 def include_log_args(include_log: bool) -> list[str]:

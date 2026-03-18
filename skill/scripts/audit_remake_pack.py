@@ -14,76 +14,76 @@ from merge_remake_docs import collect_markdown_files
 
 CORE_DOC_REQUIREMENTS = {
     "00-overview-and-source-ledger.md": [
-        ("Scope Lock", "范围锁定"),
-        ("Source Ledger", "资料台账"),
-        ("Confidence Policy", "可信度规则"),
-        ("Top Unknowns", "最高优先级未知项"),
+        ("Scope Lock",),
+        ("Source Ledger",),
+        ("Confidence Policy",),
+        ("Top Unknowns",),
     ],
     "01-product-and-player-experience.md": [
-        ("Product Definition", "产品定义"),
-        ("North Star Experience", "北极星体验"),
-        ("Player Journey", "玩家旅程"),
-        ("Loop Design", "循环设计"),
-        ("Product Management Notes", "产品经理视角"),
+        ("Product Definition",),
+        ("North Star Experience",),
+        ("Player Journey",),
+        ("Loop Design",),
+        ("Product Management Notes",),
         ("Confirmed Facts",),
         ("Inferred Model",),
         ("Remake Decisions",),
         ("Open Questions",),
     ],
     "02-systems-and-gameplay.md": [
-        ("Control Grammar", "操作语法"),
-        ("Movement And Combat", "移动与战斗"),
-        ("Challenge Structure", "挑战结构"),
-        ("Gameplay Feel Notes", "手感拆解"),
+        ("Control Grammar",),
+        ("Movement And Combat",),
+        ("Challenge Structure",),
+        ("Gameplay Feel Notes",),
         ("Confirmed Facts",),
         ("Inferred Model",),
         ("Remake Decisions",),
         ("Open Questions",),
     ],
     "03-economy-and-balance.md": [
-        ("Resource Map", "资源地图"),
-        ("Faucets And Sinks", "产出与消耗"),
-        ("Stat And Progression Model", "属性与成长模型"),
-        ("Formula Capture", "公式记录"),
-        ("Tuning Risks", "调优风险"),
+        ("Resource Map",),
+        ("Faucets And Sinks",),
+        ("Stat And Progression Model",),
+        ("Formula Capture",),
+        ("Tuning Risks",),
         ("Confirmed Facts",),
         ("Inferred Model",),
         ("Remake Decisions",),
         ("Open Questions",),
     ],
     "04-content-art-audio-narrative.md": [
-        ("Content Taxonomy", "内容分类"),
-        ("Art Direction", "美术方向"),
-        ("Animation", "动画"),
-        ("Music And Audio", "音乐与音效"),
-        ("Copywriting And Narrative", "文案与剧情"),
+        ("Content Taxonomy",),
+        ("Art Direction",),
+        ("Animation",),
+        ("Music And Audio",),
+        ("Copywriting And Narrative",),
         ("Confirmed Facts",),
         ("Inferred Model",),
         ("Remake Decisions",),
         ("Open Questions",),
     ],
     "05-client-architecture-and-production.md": [
-        ("Product Targets", "产品目标"),
-        ("Runtime Architecture", "运行时架构"),
-        ("Tools And Workflow", "工具与流程"),
-        ("Production Plan", "制作计划"),
-        ("Risk Register", "风险登记"),
+        ("Product Targets",),
+        ("Runtime Architecture",),
+        ("Tools And Workflow",),
+        ("Production Plan",),
+        ("Risk Register",),
         ("Confirmed Facts",),
         ("Inferred Model",),
         ("Remake Decisions",),
         ("Open Questions",),
     ],
     "06-replica-backlog-and-acceptance.md": [
-        ("Prioritized Backlog", "优先级 Backlog"),
-        ("Vertical Slice Scope", "垂直切片范围"),
-        ("Full Production Scope", "完整制作范围"),
-        ("Acceptance Criteria", "验收标准"),
-        ("Open Gaps And Validation", "未解问题与验证"),
+        ("Prioritized Backlog",),
+        ("Vertical Slice Scope",),
+        ("Full Production Scope",),
+        ("Acceptance Criteria",),
+        ("Open Gaps And Validation",),
     ],
     "99-research-log.md": [
-        ("Observation Entries", "观察记录"),
-        ("Frame / Timing Notes", "帧数 / 时序备注"),
-        ("Contradictions To Resolve", "待消解矛盾"),
+        ("Observation Entries",),
+        ("Frame / Timing Notes",),
+        ("Contradictions To Resolve",),
     ],
 }
 
@@ -106,7 +106,6 @@ PLACEHOLDER_VALUES = {
     "[]",
     '""',
     "TBD version / region / platform / time slice",
-    "待确认版本 / 区服 / 平台 / 时间切片",
 }
 STATUS_INCOMPLETE = {"", "not-started", "not started"}
 SOURCE_MARKDOWN_EXCLUDES = {
@@ -121,126 +120,92 @@ AUDIT_LABELS = {
         "warnings": "Warnings",
         "none": "None.",
     },
-    "zh-CN": {
-        "audit_result": "审计结果",
-        "errors": "错误",
-        "warnings": "警告",
-        "none": "无。",
-    },
 }
 
 ISSUE_TEMPLATES = {
     "missing_required_document": {
         "en": "Missing required document: {filename}",
-        "zh-CN": "缺少必需文档: {filename}",
     },
     "missing_section_heading": {
         "en": "{filename} is missing section heading: {heading}",
-        "zh-CN": "{filename} 缺少章节标题: {heading}",
     },
     "blank_scaffold_placeholders": {
         "en": "{filename} still contains {count} blank scaffold placeholders. Sample: {sample}",
-        "zh-CN": "{filename} 仍有 {count} 个空白模板占位。示例: {sample}",
     },
     "missing_manifest_baseline_version": {
         "en": "research-manifest.yaml is missing a concrete baseline_version.",
-        "zh-CN": "research-manifest.yaml 缺少明确的 baseline_version。",
     },
     "default_baseline_placeholder": {
         "en": "00-overview-and-source-ledger.md still uses the default baseline-version placeholder.",
-        "zh-CN": "00-overview-and-source-ledger.md 仍在使用默认的基线版本占位。",
     },
     "missing_manifest_file": {
         "en": "Support files are present but research-manifest.yaml is missing.",
-        "zh-CN": "已存在 support 文件，但缺少 research-manifest.yaml。",
     },
     "missing_support_file": {
         "en": "Support file missing: {path}",
-        "zh-CN": "缺少 support 文件: {path}",
     },
     "empty_source_ledger": {
         "en": "data/source-ledger.csv exists but still looks scaffold-empty.",
-        "zh-CN": "data/source-ledger.csv 已存在，但看起来仍是空模板。",
     },
     "empty_formula_catalog": {
         "en": "data/formula-catalog.csv has no captured formulas yet.",
-        "zh-CN": "data/formula-catalog.csv 还没有记录任何公式。",
     },
     "empty_risk_register": {
         "en": "data/risk-register.csv has no populated risk entries yet.",
-        "zh-CN": "data/risk-register.csv 还没有填入任何风险项。",
     },
     "empty_role_coverage": {
         "en": "data/role-coverage.csv is missing or empty.",
-        "zh-CN": "data/role-coverage.csv 缺失或为空。",
     },
     "missing_role_coverage_roles": {
         "en": "data/role-coverage.csv is missing roles: {roles}",
-        "zh-CN": "data/role-coverage.csv 缺少这些角色: {roles}",
     },
     "incomplete_role_coverage": {
         "en": "{count} role-coverage entries are still not-started.",
-        "zh-CN": "仍有 {count} 个 role-coverage 条目处于 not-started。",
     },
     "missing_archetype_doc": {
         "en": "Archetype pack is missing {filename}.",
-        "zh-CN": "archetype 包缺少 {filename}。",
     },
     "missing_archetype_support_file": {
         "en": "Archetype support file missing: {path}",
-        "zh-CN": "缺少 archetype support 文件: {path}",
     },
     "no_archetype_checklist_progress": {
         "en": "data/archetype-checklist.csv has no progressed checklist items yet.",
-        "zh-CN": "data/archetype-checklist.csv 还没有任何推进中的 checklist 项。",
     },
     "no_archetype_metric_bands": {
         "en": "data/archetype-metrics.csv has no observed bands populated yet.",
-        "zh-CN": "data/archetype-metrics.csv 还没有填入 observed band。",
     },
     "missing_experiment_support_path": {
         "en": "Experiment support is incomplete: missing {path}",
-        "zh-CN": "实验 support 不完整，缺少 {path}",
     },
     "missing_experiment_summary": {
         "en": "Experiment support is incomplete: missing 10-experiment-summary.md or 10-experiment-summary-compact.md.",
-        "zh-CN": "实验 support 不完整，缺少 10-experiment-summary.md 或 10-experiment-summary-compact.md。",
     },
     "no_experiment_plan_progress": {
         "en": "data/experiment-plan.csv has no experiments beyond not-started.",
-        "zh-CN": "data/experiment-plan.csv 里还没有任何实验推进到 not-started 之外。",
     },
     "no_experiment_registry_progress": {
         "en": "data/experiment-observations.csv has no registry entries beyond not-started.",
-        "zh-CN": "data/experiment-observations.csv 里还没有任何登记推进到 not-started 之外。",
     },
     "empty_experiment_detail_sheets": {
         "en": "data/experiments/ exists but contains no typed detail sheets.",
-        "zh-CN": "data/experiments/ 已存在，但没有任何 typed 明细表。",
     },
     "no_experiment_raw_samples": {
         "en": "data/experiments/*.csv contains no captured raw samples yet.",
-        "zh-CN": "data/experiments/*.csv 还没有任何已采集的原始样本。",
     },
     "stale_experiment_summary": {
         "en": "{path} is older than {count} research inputs. Newer inputs include: {sample}",
-        "zh-CN": "{path} 早于 {count} 个调研输入。较新的输入包括: {sample}",
     },
     "stale_evidence_link_audit": {
         "en": "{path} is older than {count} evidence inputs. Newer inputs include: {sample}",
-        "zh-CN": "{path} 早于 {count} 个证据输入。较新的输入包括: {sample}",
     },
     "stale_status_report": {
         "en": "{path} is older than {count} pack inputs. Newer inputs include: {sample}",
-        "zh-CN": "{path} 早于 {count} 个调研包输入。较新的输入包括: {sample}",
     },
     "stale_handoff_bundle": {
         "en": "{path} is older than {count} handoff inputs. Newer inputs include: {sample}",
-        "zh-CN": "{path} 早于 {count} 个交接输入。较新的输入包括: {sample}",
     },
     "stale_handoff_dossier": {
         "en": "{path} is older than {count} dossier inputs. Newer inputs include: {sample}",
-        "zh-CN": "{path} 早于 {count} 个交接文档输入。较新的输入包括: {sample}",
     },
 }
 
@@ -268,17 +233,14 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--language",
-        choices=("auto", "en", "zh-CN"),
+        choices=("auto", "en"),
         default="auto",
-        help="Output language. Defaults to auto-detection from the pack.",
+        help="Output language. Defaults to auto, which currently resolves to en.",
     )
     return parser.parse_args()
 
 
 def detect_language(docs_dir: Path) -> str:
-    overview = read_text(docs_dir / "00-overview-and-source-ledger.md")
-    if "范围锁定" in overview or "复刻调研总览" in overview:
-        return "zh-CN"
     return "en"
 
 
@@ -406,6 +368,8 @@ def source_markdown_paths(docs_dir: Path) -> list[Path]:
         if path.name in SOURCE_MARKDOWN_EXCLUDES:
             continue
         if path.name.endswith("-dossier.md"):
+            continue
+        if path.name.endswith("-dossier-template.md"):
             continue
         if path.name.startswith("handoff-"):
             continue
@@ -611,10 +575,7 @@ def audit_baseline(docs_dir: Path, manifest: dict[str, str], issues: list[Issue]
         return
     overview_text = read_text(overview_path)
     if any(value in overview_text for value in PLACEHOLDER_VALUES if value):
-        if (
-            "TBD version / region / platform / time slice" in overview_text
-            or "待确认版本 / 区服 / 平台 / 时间切片" in overview_text
-        ):
+        if "TBD version / region / platform / time slice" in overview_text:
             issues.append(make_issue("error", "default_baseline_placeholder"))
 
 

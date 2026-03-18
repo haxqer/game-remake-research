@@ -69,7 +69,7 @@ def parse_args() -> argparse.Namespace:
         "--language",
         choices=("auto", "en"),
         default="auto",
-        help="Output language for generated summaries. Defaults to auto-detection from the pack.",
+        help="Output language for generated summaries. Defaults to auto, which currently resolves to en.",
     )
     return parser.parse_args()
 

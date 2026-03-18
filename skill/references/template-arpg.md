@@ -64,4 +64,4 @@ Read `metrics-arpg.md` when you need measurable baselines for combat tempo, loot
 - Reproducing loot colors without reproducing chase quality.
 - Making combat visually loud but mechanically mushy.
 - Flattening density and turning the game into corridor downtime.
-- Leaving endgame under-specified because “we can add content later.”
+- Leaving endgame under-specified because "we can add content later."

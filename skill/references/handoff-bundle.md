@@ -33,7 +33,9 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/build_handoff_bundle.py" \
 
 Default generated outputs:
 
+- `10-experiment-summary.md`
 - `10-experiment-summary-compact.md` when compact dossier output is requested
+- `reports/evidence-link-audit.md` when the pack has a source ledger
 - `reports/pack-status.md`
 - `reports/pack-status-compact.md`
 - `handoff-compact-dossier.md`
@@ -62,8 +64,9 @@ Use `--dossier-mode both` when reviewers need both full and compact dossiers.
 - When stale summaries, reports, dossiers, and manifests pile up together, that same next-action list now collapses them into one inferred bundle-regeneration command.
 - When only one stale artifact class remains, the next-action list now emits the direct script command for that class instead of a generic reminder.
 - Those generated command snippets assume the shell is already inside the pack root, so they use `--docs-dir .`.
-- If the current generated artifact was explicitly generated with `--language en` or `--language zh-CN`, those stale-repair commands now preserve that same language flag.
+- If the current generated artifact was explicitly generated with `--language en`, those stale-repair commands now preserve that same language flag.
 - If a stale handoff dossier was originally generated with `--include-log`, the repair command also preserves that flag.
 - If stale experiment summaries depend on archetype metric rollup support, the generated bundle-refresh command now preserves `--rollup-metrics` too.
 - When the bundle regenerates both status-report variants in one pass, those reports also ignore each other during freshness audit so the pair does not self-report stale sibling warnings.
 - Because the bundle regenerates summaries, evidence audits, and requested status variants before its final audit pass, it also clears most stale-artifact warnings automatically during packaging.
+- Existing experiment-summary variants are also refreshed during bundling, so a stale `10-experiment-summary.md` does not linger just because the handoff request only asked for a compact dossier.

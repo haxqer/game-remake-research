@@ -40,7 +40,7 @@ python3 "$GAME_REMAKE_RESEARCH/scripts/audit_remake_pack.py" \
   --strict
 ```
 
-Use `--language en` or `--language zh-CN` when the report should ignore auto-detected pack language.
+Use `--language en` when you want to pin the output explicitly. `--language auto` currently resolves to `en`.
 
 ## Output Semantics
 

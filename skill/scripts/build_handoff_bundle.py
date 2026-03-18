@@ -90,9 +90,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--language",
-        choices=("auto", "en", "zh-CN"),
+        choices=("auto", "en"),
         default="auto",
-        help="Output language for generated reports. Defaults to auto.",
+        help="Output language for generated reports. Defaults to auto, which currently resolves to en.",
     )
     parser.add_argument(
         "--manifest-output",
@@ -122,8 +122,6 @@ def summarize_locations(locations: list[str], language: str, limit: int = 2) -> 
         return "; ".join(locations)
     shown = "; ".join(locations[:limit])
     remainder = len(locations) - limit
-    if language == "zh-CN":
-        return f"{shown}; 另有 {remainder} 处"
     return f"{shown}; +{remainder} more"
 
 
@@ -152,10 +150,7 @@ def write_dossier(
 ) -> Path:
     output_name = DOSSIER_OUTPUTS[mode]
     files = collect_markdown_files(docs_dir, output_name, include_log, mode)
-    if language == "zh-CN":
-        title = f"{game} 交接文档 ({mode})"
-    else:
-        title = f"{game} Handoff Dossier ({mode})"
+    title = f"{game} Handoff Dossier ({mode})"
     output = build_output(title, files)
     output_path = docs_dir / output_name
     output_path.write_text(output, encoding="utf-8")
@@ -246,54 +241,6 @@ def build_manifest(
             "evidence_unused_detail": "Unused ledger example",
             "evidence_doc_detail": "Citation-gap example",
         },
-        "zh-CN": {
-            "title": f"{game} 交接打包结果",
-            "snapshot": "总览",
-            "artifacts": "已生成产物",
-            "audit": "审计",
-            "actions": "建议下一步",
-            "errors": "错误",
-            "warnings": "警告",
-            "none": "无。",
-            "strict": "严格审计",
-            "rollup": "指标回填",
-            "skipped": "跳过",
-            "updated": "已更新",
-            "generated_at": "生成时间",
-            "evidence_priority": "最高证据优先级",
-            "duplicate_sources": "重复 Source ID",
-            "unknown_sources": "未知 Source ID",
-            "blank_source_refs": "缺少来源引用的行",
-            "unused_sources": "未使用台账 Source ID",
-            "doc_citation_gaps": "缺少内联引用的文档",
-            "stale_experiment_summaries": "过期的 experiment summary",
-            "stale_evidence_audits": "过期的 evidence audit",
-            "stale_status_reports": "过期的状态报告",
-            "stale_handoff_dossiers": "过期的 handoff dossier",
-            "stale_handoff_manifests": "过期的 handoff manifest",
-            "yes": "是",
-            "no": "否",
-            "skip_count": "跳过",
-            "evidence_audit": "证据链接审计",
-            "evidence_findings": "证据发现",
-            "priority_blocker": "阻断",
-            "priority_high": "高",
-            "priority_medium": "中",
-            "priority_low": "低",
-            "priority_none": "无",
-            "group_scope": "范围与结构",
-            "group_placeholders": "模板占位",
-            "group_support_data": "Support 数据",
-            "group_generated_artifacts": "派生产物",
-            "group_progress": "推进信号",
-            "group_other": "其他",
-            "omitted_group_items": "本组另有 {count} 条。",
-            "evidence_duplicate_detail": "重复来源示例",
-            "evidence_unknown_detail": "未知来源示例",
-            "evidence_blank_detail": "缺少来源示例",
-            "evidence_unused_detail": "未使用台账示例",
-            "evidence_doc_detail": "缺少引用示例",
-        },
     }[language]
 
     pack_manifest = parse_manifest(docs_dir / "research-manifest.yaml")
@@ -333,38 +280,6 @@ def build_manifest(
             "names_more": "+{count} more",
             "none": "None.",
             "no_actions": "No immediate actions.",
-        },
-        "zh-CN": {
-            "action_restore_docs": "恢复缺失的核心文档: {value}",
-            "action_replace_placeholders": "优先替换 {value} 中的模板占位。",
-            "action_lock_baseline": "先锁定基线版本、区服、平台与时间切片。",
-            "action_populate_sources": "先补齐 `data/source-ledger.csv`，至少写入带日期的官方资料和实机来源。",
-            "action_advance_roles": "更新 `data/role-coverage.csv`，让每个角色都反映真实进度和缺失证据。",
-            "action_progress_checklist": "先推进最高优先级的 archetype checklist 项。",
-            "action_populate_metrics": "补充 observed metric band，或在采样后执行 metric rollup。",
-            "action_mark_plan": "把实验计划状态改成真实进度，不要整张表都停留在 `not-started`。",
-            "action_mark_plan_specific": "先更新 {value} 的 experiment-plan 状态，让计划反映真实推进。",
-            "action_update_registry": "更新 `data/experiment-observations.csv`，让实验登记反映真实采集进度。",
-            "action_update_registry_specific": "先更新 {value} 在 `data/experiment-observations.csv` 里的状态，让登记与真实采集一致。",
-            "action_capture_samples": "至少补一份 typed experiment sheet，让调研包有原始样本而不只是计划。",
-            "action_capture_samples_specific": "优先给 {value} 补 typed 原始样本。",
-            "action_fix_unknown_sources": "清理重复或未知的 `S-id` 引用，确保每个被引用来源都能在 `data/source-ledger.csv` 中唯一解析。",
-            "action_fix_blank_source_refs": "为已填内容的 support 行补齐 `source_id` / `source_ids`。",
-            "action_fix_doc_citations": "给已写内容的 `Confirmed Facts` / `Inferred Model` 补上内联 `S-id` 锚点。",
-            "action_review_unused_sources": "检查未使用的台账 Source ID，决定删除还是在正文中引用。",
-            "action_refresh_generated_bundle": "执行 {command}，一次性刷新这些过期的派生产物: {targets}。",
-            "action_refresh_experiment_summary": "执行 {command}，重新生成过期的 experiment summary: {value}。",
-            "action_refresh_evidence_audit": "执行 {command}，重新生成过期的 evidence audit 产物: {value}。",
-            "action_refresh_status_report": "执行 {command}，重新生成过期的状态报告: {value}。",
-            "action_refresh_handoff_dossier": "执行 {command}，重新生成过期的 handoff dossier: {value}。",
-            "action_refresh_handoff_bundle": "执行 {command}，重新生成过期的 handoff manifest: {value}。",
-            "priority_blocker": "阻断",
-            "priority_high": "高",
-            "priority_medium": "中",
-            "priority_low": "低",
-            "names_more": "另有 {count} 个",
-            "none": "无。",
-            "no_actions": "当前没有强制动作。",
         },
     }[language]
     actions = recommend_actions(
@@ -536,6 +451,12 @@ def main() -> int:
     if has_experiments:
         summary_modes = set()
         dossier_modes = resolve_modes(args.dossier_mode)
+        existing_summary_modes = {
+            mode
+            for mode, relative_path in SUMMARY_OUTPUTS.items()
+            if (docs_dir / relative_path).exists()
+        }
+        summary_modes.update(existing_summary_modes)
         if "full" in dossier_modes:
             summary_modes.add("full")
         if "compact" in dossier_modes:

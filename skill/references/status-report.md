@@ -39,7 +39,7 @@ Default output:
 - `reports/pack-status.md` for `--mode full`
 - `reports/pack-status-compact.md` for `--mode compact`
 
-Use `--language zh-CN` or `--language en` when auto-detection is not what you want.
+Use `--language en` when you want to pin the output explicitly. `--language auto` currently resolves to `en`.
 
 `--mode full` now expands the evidence section into actionable detail tables:
 
@@ -63,7 +63,7 @@ When generated artifacts are stale, the next-action list also points to the exac
 If freshness debt spans multiple artifact classes, those next actions now collapse into one inferred `build_handoff_bundle.py` command instead of listing four separate refresh bullets.
 If only one artifact class is stale, the next-action line now includes the direct repair command for that class.
 Those command snippets assume the current shell is already in the research-pack root, so they use `--docs-dir .`.
-If the current generated artifact was explicitly generated with `--language en` or `--language zh-CN`, the stale-repair commands now preserve that same language flag, including experiment-summary refresh commands.
+If the current generated artifact was explicitly generated with `--language en`, the stale-repair commands now preserve that same language flag, including experiment-summary refresh commands.
 If the stale artifact is a handoff dossier that was originally generated with `--include-log`, the repair command now preserves that flag too.
 If stale experiment summaries depend on archetype metric rollup support, the repair command now includes `rollup_experiment_metrics.py` before summary regeneration.
 
